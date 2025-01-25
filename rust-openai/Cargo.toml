@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "src/rust_openai_backend"
+]
+resolver = "2"

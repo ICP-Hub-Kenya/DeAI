@@ -52,3 +52,6 @@ Example of Juno + Open AI [here](https://github.com/peterpeterparker/juno-openai
 
 ## Training Models on ICP: 
 Continue from here
+firebase proxy 
+
+Proxy reasons https://docs.google.com/document/d/1a0vRA4ST9TSoBNDK_lAFtjKllTcAgs8NwlGi8bZKeXg/edit?usp=sharing 
