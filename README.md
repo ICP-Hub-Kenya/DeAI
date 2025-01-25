@@ -48,10 +48,10 @@ Example is [DeVinci](https://github.com/patnorris/DecentralizedAIonIC)
 ### Inference with HTTPs Outcalls:
 Canisters will make HTTPs requests to Web2 services such as OpenAI and Claude using HTTPs outcalls
 
-Example of Juno + Open AI [here](https://github.com/peterpeterparker/juno-openai)
+Check out example on how to create an on chain chatbot using Inference with HTTPs outcalls [here](https://github.com/ICP-Hub-Kenya/DeAI/tree/main/rust-openai)
 
-## Training Models on ICP: 
+<!-- ## Training Models on ICP: 
 Continue from here
 firebase proxy 
 
-Proxy reasons https://docs.google.com/document/d/1a0vRA4ST9TSoBNDK_lAFtjKllTcAgs8NwlGi8bZKeXg/edit?usp=sharing 
+Proxy reasons https://docs.google.com/document/d/1a0vRA4ST9TSoBNDK_lAFtjKllTcAgs8NwlGi8bZKeXg/edit?usp=sharing  -->
