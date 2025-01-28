@@ -15,14 +15,58 @@ Check out full documentation on [HTTPs outcalls](https://internetcomputer.org/do
 ## Why Use a Proxy?
 Direct calls from ICP canisters to OpenAI's API present several challenges:
 
-1. Rate limiting and API key management
-2. Response transformation and error handling
-3. Security of API credentials
-4. CORS and request formatting
+1. Rate limiting: multiple replicas in the subnet make simultaneous requests, potentially exceeding rate limits.
+2. Response transformation and error handling: a proxy will help normalize responses and handle errors.
+3. Security of API credentials: we need to use proxys to securely store API keys or any other sensitive data. 
+4. IPv6 requirement: ICP requires external HTTPs outcalls to be made to IPv6 addresses. Many APIs (including Open AIs) do not support IPv6. The proxy allows translation between IPv4 and IPv6 requests. 
 
 Our solution uses a Supabase Edge Function as a proxy to:
 
 - Securely store API keys
 - Handle request/response formatting
 - Manage rate limiting
-- Add additional security layers
+
+## Getting started
+
+1. Clone the repository: 
+```bash 
+git clone https://github.com/ICP-Hub-Kenya/DeAI.git 
+
+cd rust-openai
+``` 
+
+2. Set up supabase and add your OpenAI API key to the environment variables.
+
+- Documentation on getting started with Edge Functions can be found [here](https://supabase.com/docs/guides/functions/quickstart)
+
+- Documentation on how to deploy Edge Functions can be found [here](https://supabase.com/docs/guides/functions/deploy)
+
+- Add your OpenAI API key to the environment variables. Check out the documentation [here](https://supabase.com/docs/guides/functions/secrets)
+```typescript
+const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY')
+``` 
+
+Once you've set it up end deployed your edge functions, the next step is to add the URL of your edge function to the backend canister
+```rust 
+let supabase_url = "https://<PROJECT_ID>.supabase.co/functions/v1/<FUNCTION_NAME>";
+``` 
+
+3. Deploy the canister: 
+
+```bash
+# Generate the did files 
+npx generate-did rust_openai_backend
+
+# Deploy the canister
+dfx deploy rust_openai_backend
+``` 
+
+4. Run the frontend: 
+```bash
+npm run start
+``` 
+
+Now you have your project running and you can test it out. 
+
+![DeAI Code Overview](./UI.png)
+

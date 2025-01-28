@@ -12,7 +12,7 @@ struct CodeReviewRequest {
 
 #[ic_cdk::update]
 async fn review_code(code: String) -> String {
-    let supabase_url = "https://jrlqttqoaaiuaimuuxfw.supabase.co/functions/v1/openai-proxy/review";
+    let supabase_url = "https://<PROJECT_ID>.supabase.co/functions/v1/<FUNCTION_NAME>";
 
     let request_headers = vec![
         HttpHeader {
@@ -59,7 +59,7 @@ async fn review_code(code: String) -> String {
 
 #[ic_cdk::update]
 async fn generate_code(prompt: String) -> String {
-    let supabase_url = "https://jrlqttqoaaiuaimuuxfw.supabase.co/functions/v1/openai-proxy/generate";
+    let supabase_url = "https://<PROJECT_ID>.supabase.co/functions/v1/<FUNCTION_NAME>";
 
     let request_headers = vec![
         HttpHeader {

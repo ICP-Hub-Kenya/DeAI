@@ -52,7 +52,7 @@ function App() {
     <div className="chat-container">
       <header className="chat-header">
         <h1>DeAI Code Assistant</h1>
-        <p className="subtitle">Your AI-powered coding companion</p>
+        <p className="subtitle">Your DeAI-powered coding companion</p>
       </header>
       
       <div className="messages-container">
