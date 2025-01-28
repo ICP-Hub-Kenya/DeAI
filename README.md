@@ -36,6 +36,8 @@ Canisters can utilize inference in 4 ways:
 ### Inference with HTTPs Outcalls:
 Canisters will make HTTPs requests to Web2 services such as OpenAI and Claude using HTTPs outcalls
 
+https://github.com/user-attachments/assets/7e9bd284-2a9b-4ef8-8d72-a273d8dd5be1
+
 Check out example on how to create an on chain chatbot using Inference with HTTPs outcalls [here](https://github.com/ICP-Hub-Kenya/DeAI/tree/main/rust-openai)
 
 ### Onchain Inference:
