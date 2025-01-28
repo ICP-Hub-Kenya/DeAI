@@ -43,7 +43,13 @@ Check out example on how to create an on chain chatbot using Inference with HTTP
 ### Onchain Inference:
 ICP Supports on chain inference of small models using libraries like [Sanos Tact](https://github.com/sonos/tract)
 
+https://github.com/user-attachments/assets/55421200-f6e9-4bbb-b136-0b128ab6266c
+
 Examples of onchain inference [here](https://internetcomputer.org/docs/current/developer-docs/ai/inference#examples)
+
+DecideAI is a good example of such a project. They translated a GPT2 model into a smart contract using their rust-connect-py-ai-to-ic framework.
+
+Check out the example [here](https://github.com/ICP-Hub-Kenya/DeAI/tree/main/decide-ai-ic) 
 
 ### On device Inference:
 This would require the user to download the model from a canister to their device. 
