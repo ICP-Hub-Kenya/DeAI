@@ -1,5 +1,7 @@
 # Tutorial: Building DeAI with ICP HTTP Outcalls 
 
+https://github.com/user-attachments/assets/b8f7d2ea-87b1-41b1-b0d7-b364fdffc666
+
 ## Introduction to DeAI with HTTP Outcalls: 
 The most basic form of decentralized AI involves smart contracts making HTTP requests to Web2 AI services. While not fully decentralized, this approach leverages ICP's unique HTTP outcalls feature to bridge traditional AI services with on-chain logic. 
 
