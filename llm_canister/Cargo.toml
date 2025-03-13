@@ -1,5 +1,5 @@
 [workspace]
 members = [
-    "src/llm_canister_backend"
+    "src/backend"
 ]
 resolver = "2"

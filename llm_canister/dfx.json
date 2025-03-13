@@ -1,19 +1,19 @@
 {
   "canisters": {
-    "llm_canister_backend": {
-      "candid": "src/llm_canister_backend/llm_canister_backend.did",
-      "package": "llm_canister_backend",
+    "backend": {
+      "candid": "src/backend/backend.did",
+      "package": "backend",
       "type": "rust"
     },
-    "llm_canister_frontend": {
+    "frontend": {
       "dependencies": [
-        "llm_canister_backend"
+        "backend"
       ],
       "source": [
-        "src/llm_canister_frontend/dist"
+        "src/frontend/dist"
       ],
       "type": "assets",
-      "workspace": "llm_canister_frontend"
+      "workspace": "frontend"
     }
   },
   "defaults": {
