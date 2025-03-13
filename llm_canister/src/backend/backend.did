@@ -1,0 +1,11 @@
+type SimpleProject = record {
+  canister_code : text;
+  dfx_json : text;
+  readme : text;
+};
+service : {
+  ask_question : (text) -> (text);
+  generate_simple_project : (text, text, text) -> (SimpleProject);
+  get_project_examples : () -> (vec text) query;
+  quick_prompt : (text) -> (text);
+}
