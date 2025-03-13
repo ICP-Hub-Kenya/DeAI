@@ -14,6 +14,51 @@ function App() {
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const chatExamples = [
+    {
+      category: "Getting Started",
+      prompts: [
+        "What is the Internet Computer Protocol (ICP)?",
+        "How do I create my first canister?",
+        "Explain what cycles are in Internet Computer",
+      ]
+    },
+    {
+      category: "Development",
+      prompts: [
+        "How do I make inter-canister calls?",
+        "Explain the difference between query and update calls",
+        "What are the best practices for canister development?",
+      ]
+    },
+    {
+      category: "Deployment",
+      prompts: [
+        "How do I deploy a canister to mainnet?",
+        "How can I manage cycles in my canister?",
+        "What is the difference between local and mainnet deployment?",
+      ]
+    }
+  ];
+
+  const projectExamples = [
+    {
+      name: "Token Canister",
+      description: "A basic token canister with transfer and balance check functionality",
+      language: "motoko"
+    },
+    {
+      name: "Profile Storage",
+      description: "A user profile storage system with CRUD operations",
+      language: "rust"
+    },
+    {
+      name: "Todo List",
+      description: "A simple todo list with add, remove, and list tasks functionality",
+      language: "motoko"
+    }
+  ];
+
   const handleChat = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -40,6 +85,16 @@ function App() {
       setResponse('Error: Failed to generate project');
     }
     setLoading(false);
+  };
+
+  const handleExampleClick = (example) => {
+    if (mode === 'chat') {
+      setInput(example);
+    } else {
+      setProjectName(example.name);
+      setProjectDesc(example.description);
+      setLanguage(example.language);
+    }
   };
 
   const CodeBlock = ({ language, code, title }) => {
@@ -100,6 +155,40 @@ function App() {
     </div>
   );
 
+  const renderExamples = () => (
+    <div className="examples-section">
+      <h3>Try these examples:</h3>
+      <div className="examples-list">
+        {mode === 'chat' ? (
+          chatExamples.map(category => (
+            <div key={category.category}>
+              <h4>{category.category}:</h4>
+              {category.prompts.map(prompt => (
+                <div 
+                  key={prompt} 
+                  className="example-item"
+                  onClick={() => handleExampleClick(prompt)}
+                >
+                  • {prompt}
+                </div>
+              ))}
+            </div>
+          ))
+        ) : (
+          projectExamples.map(example => (
+            <div 
+              key={example.name} 
+              className="example-item"
+              onClick={() => handleExampleClick(example)}
+            >
+              • {example.name}: {example.description} ({example.language})
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+
   return (
     <div className="app">
       <h1>
@@ -129,50 +218,56 @@ function App() {
       </div>
 
       {mode === 'chat' ? (
-        <form onSubmit={handleChat}>
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask anything about Internet Computer development..."
-            rows="4"
-          />
-          <button type="submit" disabled={loading || !input}>
-            {loading ? (
-              <>Thinking<span className="loading"></span></>
-            ) : (
-              'Ask Question'
-            )}
-          </button>
-        </form>
+        <>
+          <form onSubmit={handleChat}>
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask anything about Internet Computer development..."
+              rows="4"
+            />
+            <button type="submit" disabled={loading || !input}>
+              {loading ? (
+                <>Thinking<span className="loading"></span></>
+              ) : (
+                'Ask Question'
+              )}
+            </button>
+          </form>
+          {renderExamples()}
+        </>
       ) : (
-        <form onSubmit={handleGenerate}>
-          <input
-            type="text"
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
-            placeholder="Enter your project name..."
-          />
-          <textarea
-            value={projectDesc}
-            onChange={(e) => setProjectDesc(e.target.value)}
-            placeholder="Describe what your project should do..."
-            rows="3"
-          />
-          <select 
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-          >
-            <option value="motoko">Motoko</option>
-            <option value="rust">Rust</option>
-          </select>
-          <button type="submit" disabled={loading || !projectName || !projectDesc}>
-            {loading ? (
-              <>Generating<span className="loading"></span></>
-            ) : (
-              '🔨 Generate Project'
-            )}
-          </button>
-        </form>
+        <>
+          <form onSubmit={handleGenerate}>
+            <input
+              type="text"
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+              placeholder="Enter your project name..."
+            />
+            <textarea
+              value={projectDesc}
+              onChange={(e) => setProjectDesc(e.target.value)}
+              placeholder="Describe what your project should do..."
+              rows="3"
+            />
+            <select 
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+            >
+              <option value="motoko">Motoko</option>
+              <option value="rust">Rust</option>
+            </select>
+            <button type="submit" disabled={loading || !projectName || !projectDesc}>
+              {loading ? (
+                <>Generating<span className="loading"></span></>
+              ) : (
+                '🔨 Generate Project'
+              )}
+            </button>
+          </form>
+          {renderExamples()}
+        </>
       )}
 
       {response && (
