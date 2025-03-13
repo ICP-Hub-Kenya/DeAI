@@ -80,9 +80,18 @@ The project generator:
 
 1. **Clone the Repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/ICP-Hub-Kenya/DeAI
    cd llm_canister
    ```
+
+2. **Install Dependencies**
+    ```bash
+    cd src/frontend
+    npm install
+
+    cd ../backend
+    cargo build
+    ```
 
 3. **Start Local Network**
    ```bash
@@ -91,8 +100,14 @@ The project generator:
 
 4. **Deploy the Canister**
    ```bash
-   dfx deploy
+   npm install -g canister-tools # install canister tools for generating dids file for the rust canister
+   npx generate-did backend # generate the dids file for the backend canister
+
+   dfx deploy --playground # deploy the canister to the playground, it only works on the playground because it calls the llm canister on mainnet
    ```
+
+This is what you'll see: 
+![UI](./UI.png)
 
 ## Using the IC LLM in Your Projects
 
