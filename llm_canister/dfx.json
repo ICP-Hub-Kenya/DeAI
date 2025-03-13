@@ -1,0 +1,27 @@
+{
+  "canisters": {
+    "llm_canister_backend": {
+      "candid": "src/llm_canister_backend/llm_canister_backend.did",
+      "package": "llm_canister_backend",
+      "type": "rust"
+    },
+    "llm_canister_frontend": {
+      "dependencies": [
+        "llm_canister_backend"
+      ],
+      "source": [
+        "src/llm_canister_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "llm_canister_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

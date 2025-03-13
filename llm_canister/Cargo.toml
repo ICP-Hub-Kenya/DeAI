@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "src/llm_canister_backend"
+]
+resolver = "2"
