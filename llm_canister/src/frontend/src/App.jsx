@@ -42,29 +42,34 @@ function App() {
     setLoading(false);
   };
 
-  const CodeBlock = ({ language, code }) => (
-    <div className="code-block">
-      <div className="code-header">
-        <span className="language-tag">{language}</span>
-        <button 
-          onClick={() => navigator.clipboard.writeText(code)}
-          className="copy-button"
+  const CodeBlock = ({ language, code, title }) => {
+    // Clean up any remaining markdown artifacts
+    const cleanCode = code.replace(/```[a-z]*\n/g, '').replace(/```$/g, '');
+
+    return (
+      <div className="code-block">
+        <div className="code-header">
+          <span className="language-tag">{language}</span>
+          <button 
+            onClick={() => navigator.clipboard.writeText(cleanCode)}
+            className="copy-button"
+          >
+            Copy
+          </button>
+        </div>
+        <SyntaxHighlighter 
+          language={language} 
+          style={vscDarkPlus}
+          customStyle={{
+            margin: 0,
+            borderRadius: '0 0 8px 8px',
+          }}
         >
-          Copy
-        </button>
+          {cleanCode}
+        </SyntaxHighlighter>
       </div>
-      <SyntaxHighlighter 
-        language={language} 
-        style={vscDarkPlus}
-        customStyle={{
-          margin: 0,
-          borderRadius: '0 0 8px 8px',
-        }}
-      >
-        {code}
-      </SyntaxHighlighter>
-    </div>
-  );
+    );
+  };
 
   const renderProjectFiles = (response) => (
     <div>
@@ -73,8 +78,8 @@ function App() {
       <div className="code-section">
         <h4>Canister Code</h4>
         <CodeBlock 
-          language="rust" 
-          code={response.canister_code} 
+          language={language.toLowerCase()} 
+          code={response.canister_code}
         />
       </div>
 
@@ -82,7 +87,7 @@ function App() {
         <h4>dfx.json</h4>
         <CodeBlock 
           language="json" 
-          code={response.dfx_json} 
+          code={response.dfx_json}
         />
       </div>
 

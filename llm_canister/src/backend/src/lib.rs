@@ -32,25 +32,42 @@ pub struct SimpleProject {
     readme: String,
 }
 
+fn clean_code_response(code: String) -> String {
+    // Remove common prefixes and markdown artifacts
+    code.lines()
+        .skip_while(|line| {
+            line.is_empty() 
+            || line.contains("Here's") 
+            || line.contains("Below is")
+            || line.contains("```")
+            || line.contains("**")
+            || line.starts_with('#')
+        })
+        .collect::<Vec<&str>>()
+        .join("\n")
+        .trim()
+        .to_string()
+}
+
 #[ic_cdk::update]
 async fn generate_simple_project(name: String, description: String, language: String) -> SimpleProject {
     // Generate main canister code
     let code_prompt = format!(
-        "Generate a simple {} canister named '{}' that {}. Include basic CRUD operations.",
+        "Generate only the {} code for a canister named '{}' that {}. Include basic CRUD operations. Do not include any explanatory text.",
         language, name, description
     );
-    let canister_code = ic_llm::prompt(Model::Llama3_1_8B, code_prompt).await;
+    let canister_code = clean_code_response(ic_llm::prompt(Model::Llama3_1_8B, code_prompt).await);
 
     // Generate dfx.json
     let dfx_prompt = format!(
-        "Create a basic dfx.json configuration for a canister named '{}'",
+        "Generate only the dfx.json configuration for a canister named '{}'. Do not include any explanatory text.",
         name
     );
-    let dfx_json = ic_llm::prompt(Model::Llama3_1_8B, dfx_prompt).await;
+    let dfx_json = clean_code_response(ic_llm::prompt(Model::Llama3_1_8B, dfx_prompt).await);
 
     // Generate README
     let readme_prompt = format!(
-        "Write a simple README.md for a project named '{}' that {}",
+        "Generate a README.md for a project named '{}' that {}. Include sections for installation, usage, and features.",
         name, description
     );
     let readme = ic_llm::prompt(Model::Llama3_1_8B, readme_prompt).await;
