@@ -233,4 +233,94 @@ pre {
   padding: 16px;
   border-radius: 8px;
   overflow-x: auto;
+}
+
+.example-prompts {
+  margin-top: 30px;
+  display: grid;
+  gap: 30px;
+}
+
+.prompt-category {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.prompt-category h4 {
+  color: #2c3e50;
+  margin: 0 0 15px 0;
+  font-size: 1.1em;
+}
+
+.prompt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prompt-button {
+  text-align: left;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #2c3e50;
+  font-size: 0.95em;
+}
+
+.prompt-button:hover {
+  background: #e9ecef;
+  border-color: #dee2e6;
+  transform: translateY(-1px);
+}
+
+.examples-section {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+.examples-section h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.examples-section h4 {
+  color: #2c3e50;
+  margin: 15px 0 8px 0;
+  font-size: 1em;
+}
+
+.examples-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.example-item {
+  color: #3498db;
+  cursor: pointer;
+  padding: 4px 0;
+  font-size: 0.95em;
+}
+
+.example-item:hover {
+  text-decoration: underline;
+}
+
+/* Responsive design for example prompts */
+@media (min-width: 768px) {
+  .example-prompts {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .example-prompts {
+    grid-template-columns: 1fr;
+  }
 } 
