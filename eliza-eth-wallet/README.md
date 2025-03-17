@@ -4,7 +4,7 @@ AI Agents hold a lot of promise when it comes to automating tasks in crypto. But
 1. Most AI Agents run in a web2 environment: which requires you to give your private keys, thus bringing some security concerns. 
 2. Unless you've built some server to access the agent, you have to manually access some server just to control the agent 
 
-The IC Eliza ETH Wallet Demo by [ ] is a starter template for developing your own crypto AI Agent. It includes a demo plugin for the Eliza Agent Framework, allowing a conversational AI Agent to interact with an Ethereum Deployed wallet on ICP.
+The IC Eliza ETH Wallet Demo [Kristofer Lund](https://github.com/kristoferlund) is a starter template for developing your own crypto AI Agent. It includes a demo plugin for the Eliza Agent Framework, allowing a conversational AI Agent to interact with an Ethereum Deployed wallet on ICP.
 
 ## Why Deploy an Ethereum Wallet on the IC?
 - **Use of Threshold Signatures**: Allows transactions to be signed without exposing private keys. Threshold signature is a feature on ICP that allows multiple parties to sign a transaction without exposing the private keys.
