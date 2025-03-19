@@ -42,18 +42,18 @@ use ic_llm::Model;
 // Simple prompt
 ic_llm::prompt(Model::Llama3_1_8B, "What's the speed of light?").await;
 
-// Chat with multiple messages
+// Chat with multiple messages: when you want your model to maintain context accross multiple messages e.g chat message or when simulating a conversation
 use ic_llm::{ChatMessage, Role};
 
 ic_llm::chat(
     Model::Llama3_1_8B,
     vec![
         ChatMessage {
-            role: Role::System,
+            role: Role::System, // System sets the context behaviour of the model
             content: "You are a helpful assistant".to_string(),
         },
         ChatMessage {
-            role: Role::User,
+            role: Role::User, // This represents the user's inputs
             content: "How big is the sun?".to_string(),
         },
     ],
@@ -65,6 +65,7 @@ ic_llm::chat(
 import LLM "mo:llm";
 // Simple prompt
 await LLM.prompt(#Llama3_1_8B, "What's the speed of light?");
+
 // Chat with multiple messages
 await LLM.chat(#Llama3_1_8B, [
   {
