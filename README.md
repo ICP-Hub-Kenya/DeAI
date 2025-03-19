@@ -4,7 +4,7 @@ This repository contains examples of how to build different Decentralized AI (De
 
 ## Repository Structure
 
-- **[lm-canister](lm-canister)**: 
+- **[lm-canister](lm_canister)**: 
   - **Description**: A demo on how to build an AI Agent using the LLM Canister.
   - **Key Features**: 
     - Leverages large language models (LLMs) for AI tasks.
