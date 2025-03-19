@@ -23,21 +23,24 @@ printf "${GREEN}Setting up llm canister demo project...${NC}\n"
 printf "\n${GREEN}Installing canister-tools...${NC}\n"
 npm install -g canister-tools
 
+# Install dependencies for frontend and backend
+printf "\n${GREEN}Installing dependencies...${NC}\n"
+cd src/frontend
+npm install
+
+cd ../backend
+cargo build
+
 # Generate candid file for backend
 printf "\n${GREEN}Generating candid file for backend...${NC}\n"
 npx generate-did backend
-
-# Deploy canisters
-printf "\n${GREEN}Deploying canisters...${NC}\n"
-dfx deploy
 
 # Generate declarations
 printf "\n${GREEN}Generating declarations...${NC}\n"
 dfx generate
 
-# Setup frontend
-printf "\n${GREEN}Setting up frontend...${NC}\n"
-cd src/frontend
-npm install
+# Deploy canisters
+printf "\n${GREEN}Deploying canisters...${NC}\n"
+dfx deploy --playground
 
 printf "\n${GREEN}Setup complete! You can now run 'npm run dev' in the src/frontend directory to start the development server.${NC}\n" 

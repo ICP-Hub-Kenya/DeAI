@@ -125,6 +125,35 @@ await LLM.chat(#Llama3_1_8B, [
 
 A demonstration project showing how to integrate ICPs LLM canister in your project. This project includes a simple Q&A interface and a basic project (code) generator.
 
+## Setup Instructions
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/ICP-Hub-Kenya/DeAI
+   cd DeAI/llm_canister 
+   ```
+
+2. **Run the bash script to setup the project**
+    ```bash
+    npm run setup
+    ```
+
+3. **Start Local Network**
+   ```bash
+   dfx start --clean --background
+   ```
+
+4. **Deploy the Canister**
+   ```bash
+   npm install -g canister-tools # install canister tools for generating dids file for the rust canister
+   npx generate-did backend # generate the dids file for the backend canister
+
+   dfx deploy --playground # deploy the canister to the playground, it only works on the playground because it calls the llm canister on mainnet
+   ```
+
+This is what you'll see: 
+![UI](./UI.png)
+
 ## Project Structure
 
 ```
@@ -198,39 +227,6 @@ The project generator:
 - Generates canister code, dfx.json, and README
 - Uses specific prompts for each file type
 - Cleans and formats the responses
-
-## Setup Instructions
-
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/ICP-Hub-Kenya/DeAI
-   cd llm_canister
-   ```
-
-2. **Install Dependencies**
-    ```bash
-    cd src/frontend
-    npm install
-
-    cd ../backend
-    cargo build
-    ```
-
-3. **Start Local Network**
-   ```bash
-   dfx start --clean --background
-   ```
-
-4. **Deploy the Canister**
-   ```bash
-   npm install -g canister-tools # install canister tools for generating dids file for the rust canister
-   npx generate-did backend # generate the dids file for the backend canister
-
-   dfx deploy --playground # deploy the canister to the playground, it only works on the playground because it calls the llm canister on mainnet
-   ```
-
-This is what you'll see: 
-![UI](./UI.png)
 
 ## Using the IC LLM in Your Projects
 
