@@ -33,6 +33,7 @@ cargo build
 
 # Generate candid file for backend
 printf "\n${GREEN}Generating candid file for backend...${NC}\n"
+cd ..
 npx generate-did backend
 
 # Generate declarations

@@ -133,23 +133,15 @@ A demonstration project showing how to integrate ICPs LLM canister in your proje
    cd DeAI/llm_canister 
    ```
 
-2. **Run the bash script to setup the project**
+2. **Start dfx local replica**
+    ```bash
+    dfx start --clean --background
+    ```
+
+3. **Run the bash script to setup the project**
     ```bash
     npm run setup
     ```
-
-3. **Start Local Network**
-   ```bash
-   dfx start --clean --background
-   ```
-
-4. **Deploy the Canister**
-   ```bash
-   npm install -g canister-tools # install canister tools for generating dids file for the rust canister
-   npx generate-did backend # generate the dids file for the backend canister
-
-   dfx deploy --playground # deploy the canister to the playground, it only works on the playground because it calls the llm canister on mainnet
-   ```
 
 This is what you'll see: 
 ![UI](./UI.png)
