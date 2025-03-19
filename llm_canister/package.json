@@ -5,6 +5,7 @@
   },
   "name": "llm_canister",
   "scripts": {
+    "setup": "bash scripts/setup.sh", 
     "build": "npm run build --workspaces --if-present",
     "prebuild": "npm run prebuild --workspaces --if-present",
     "pretest": "npm run prebuild --workspaces --if-present",
