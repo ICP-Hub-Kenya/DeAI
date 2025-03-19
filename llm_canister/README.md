@@ -116,11 +116,6 @@ await LLM.chat(#Llama3_1_8B, [
    - Moving towards decentralized AI worker deployment
    - Exploring "badlands" concept for permissionless worker operation
 
-## Resources
-- [Community Forum Discussion](https://forum.dfinity.org/t/introducing-the-llm-canister-deploy-ai-agents-with-a-few-lines-of-code/41424)
-- [IC LLM Notebook](https://github.com/onicai/ic_llm_notebook)
-
-
 # LLM Canister Demo
 
 A demonstration project showing how to integrate ICPs LLM canister in your project. This project includes a simple Q&A interface and a basic project (code) generator.
@@ -299,6 +294,10 @@ let response = ic_llm::prompt(Model::Llama3_1_8B, "Your prompt here").await;
    - Implement proper error types
    - Handle network timeouts
    - Validate LLM responses
+
+## Resources
+- [Community Forum Discussion](https://forum.dfinity.org/t/introducing-the-llm-canister-deploy-ai-agents-with-a-few-lines-of-code/41424)
+- [IC LLM Notebook](https://github.com/onicai/ic_llm_notebook)
 
 ## Contributing
 
