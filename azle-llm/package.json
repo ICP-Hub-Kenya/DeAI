@@ -14,6 +14,7 @@
     "@dfinity/agent": "^2.3.0",
     "@tailwindcss/vite": "^4.0.15",
     "icp-llm-client": "^1.1.0",
+    "react-icons": "^5.5.0",
     "tailwindcss": "^4.0.15"
   }
 }
