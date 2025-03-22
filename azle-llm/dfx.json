@@ -1,0 +1,21 @@
+{
+  "canisters": {
+    "backend": {
+      "type": "azle",
+      "main": "src/backend/index.ts",
+      "declarations": {
+        "output": "../declarations/backend",
+        "node_compatibility": true
+      }
+    },
+    "frontend": {
+      "dependencies": ["backend"],
+      "frontend": {
+        "entrypoint": "src/frontend/index.html"
+      },
+      "source": ["src/frontend/dist"],
+      "type": "assets"
+    }
+  },
+  "output_env_file": ".env"
+}
