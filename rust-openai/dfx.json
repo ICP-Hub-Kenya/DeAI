@@ -1,0 +1,27 @@
+{
+  "canisters": {
+    "rust_openai_backend": {
+      "candid": "src/rust_openai_backend/rust_openai_backend.did",
+      "package": "rust_openai_backend",
+      "type": "rust"
+    },
+    "rust-openai-frontend": {
+      "dependencies": [
+        "rust_openai_backend"
+      ],
+      "source": [
+        "src/rust-openai-frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "rust-openai-frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

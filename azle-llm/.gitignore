@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Various IDEs and Editors
 .vscode/
 .idea/
@@ -10,25 +9,18 @@
 
 # dfx temporary files
 .dfx/
+.azle/
 
 # generated files
 **/declarations/
+canister_ids.json
 
 # rust
 target/
 
 # frontend code
 node_modules/
-dist/
-.svelte-kit/
+src/frontend/dist/
 
 # environment variables
 .env
-=======
-.specstory
-.cursor
-.cursor/rules
-.cursor/rules/derived-cursor-rules.mdc
-.cursor/rules/derived-cursor-rules.mdc.backup
-.cursor/rules/derived-cursor-rules.mdc.backup.1
->>>>>>> upstream/main
