@@ -1,112 +1,215 @@
-// Main.mo
-// A simple LLM integration example for Motoko beginners
-
+import Blob "mo:base/Blob";
+import Cycles "mo:base/ExperimentalCycles";
 import Debug "mo:base/Debug";
 import Text "mo:base/Text";
 import Nat "mo:base/Nat";
-import Int "mo:base/Int";
-import Array "mo:base/Array";
+import Time "mo:base/Time";
 import HashMap "mo:base/HashMap";
 import Iter "mo:base/Iter";
-import Time "mo:base/Time";
 import Principal "mo:base/Principal";
-import Buffer "mo:base/Buffer";
+import Result "mo:base/Result";
+import Error "mo:base/Error";
+import Array "mo:base/Array";
+import Int "mo:base/Int";
+// Import the management canister
+import IC "ic:aaaaa-aa";
+// Import the Types module
+import Types "./Types";
 
-// This canister demonstrates how to integrate with an external LLM service
-// using Motoko on the Internet Computer Platform (ICP)
 actor LLMIntegration {
-
   // ===== Types =====
 
-  // Represents a prompt to be sent to an LLM
-  public type Prompt = {
-    text: Text;
-    maxTokens: Nat;
-    temperature: Float;
+  // Represents a provider configuration for different LLM services
+  public type ProviderConfig = {
+    endpoint : Text;
+    api_key : Text;
+    organization : ?Text;
   };
 
-  // Represents a response received from an LLM
-  public type LLMResponse = {
-    generatedText: Text;
-    promptTokens: Nat;
-    completionTokens: Nat;
-    totalTokens: Nat;
+  // Represents different LLM models
+  public type Model = {
+    #OpenAI;
+    #Anthropic;
+    #Google;
   };
-  
+
   // Represents a conversation between a user and the LLM
   public type Conversation = {
-    id: Text;
-    messages: [Message];
+    id : Text;
+    messages : [Message];
   };
   
   // Represents a single message in a conversation
   public type Message = {
-    role: Text; // "user" or "assistant"
-    content: Text;
-    timestamp: Int;
+    role : Text; // "user" or "assistant"
+    content : Text;
+    timestamp : Int;
+  };
+
+  // Represents an LLM response
+  public type LLMResponse = {
+    text : Text;
+    model : Model;
+    input_tokens : Nat;
+    output_tokens : Nat;
+    total_tokens : Nat;
+    finish_reason : Text;
+    function_call : ?Text;
   };
 
   // ===== State =====
   
+  // Store LLM Provider configurations
+  private let LLM_PROVIDERS = HashMap.HashMap<Model, ProviderConfig>(
+    3, 
+    func(a, b) { a == b }, 
+    func(model) { 
+      switch (model) { 
+        case (#OpenAI) { 0 }; 
+        case (#Anthropic) { 1 }; 
+        case (#Google) { 2 }; 
+      }
+    }
+  );
+
   // Store conversations by ID
   private stable var conversationsEntries : [(Text, Conversation)] = [];
   private var conversations = HashMap.HashMap<Text, Conversation>(
-    0, Text.equal, Text.hash
+    10, Text.equal, Text.hash
   );
+
+  // Initialize provider configurations
+  public func initializeProviders() : async () {
+    LLM_PROVIDERS.put(
+      #OpenAI, 
+      {
+        endpoint = "https://api.openai.com/v1/chat/completions";
+        api_key = "your-openai-api-key";
+        organization = ?"your-org-id";
+      }
+    );
+
+    LLM_PROVIDERS.put(
+      #Anthropic, 
+      {
+        endpoint = "https://api.anthropic.com/v1/messages";
+        api_key = "your-anthropic-api-key";
+        organization = null;
+      }
+    );
+  };
 
   // ===== Helper Functions =====
   
   // Generate a simple ID for a new conversation
   private func generateId() : Text {
-    // In a real application, you'd want a more robust ID generation method
     let timestamp = Int.toText(Time.now());
     return "conv-" # timestamp;
   };
   
-  // Format a prompt for the external LLM service
-  private func formatPrompt(messages: [Message]) : Text {
-    // Simple formatting: just concatenate messages with role labels
-    // In a real implementation, you'd format according to your LLM provider's requirements
-    var formattedPrompt = "";
-    for (msg in messages.vals()) {
-      formattedPrompt #= msg.role # ": " # msg.content # "\n";
+  // Format messages for API request
+  private func formatMessagesForAPI(messages : [Message]) : Text {
+    var formattedMessages = "[";
+    label l for (i in Iter.range(0, messages.size() - 1)) {
+      formattedMessages #= "{\"role\": \"" # messages[i].role # 
+                            "\", \"content\": \"" # messages[i].content # "\"}";
+      if (i < messages.size() - 1) {
+        formattedMessages #= ", ";
+      };
     };
-    return formattedPrompt;
+    formattedMessages #= "]";
+    return formattedMessages;
+  };
+
+  // Transform function for HTTP response processing
+  public query func transform(args : Types.TransformArgs) : async IC.http_request_result {
+    {
+      status = args.response.status;
+      body = args.response.body;
+      headers = [];
+    }
   };
   
-  // Parse LLM response 
-  // Note: This is a simplified mock implementation
-  private func parseLLMResponse(rawResponse: Text) : LLMResponse {
-    // In a real implementation, you would parse the JSON from your LLM provider
-    // This is a mock implementation
-    return {
-      generatedText = rawResponse;
-      promptTokens = 10; // Mock value
-      completionTokens = 20; // Mock value
-      totalTokens = 30; // Mock value
+  // ===== LLM Integration =====
+  
+  private func callLLMProvider<system>(
+    model : Model,
+    messages : [Message],
+    temperature : ?Float,
+    max_tokens : ?Nat
+  ) : async Result.Result<LLMResponse, Text> {
+    // Retrieve provider configuration
+    let providerConfig = switch (LLM_PROVIDERS.get(model)) {
+      case (null) { 
+        return #err("Unsupported model: " # debug_show(model));
+      };
+      case (?config) { config };
     };
-  };
-  
-  // ===== LLM Integration (Mock) =====
-  
-  // Mock LLM response generation
-  // In a real application, this would be replaced with an HTTP outcall to an LLM API
-  private func mockLLMResponse(prompt: Text) : Text {
-    // This is a very simple mock implementation
-    // In a real application, you would make an HTTP outcall to an LLM API
-    
-    let promptLower = Text.toLowercase(prompt);
-    
-    if (Text.contains(promptLower, #text "hello") or Text.contains(promptLower, #text "hi")) {
-      return "Hello! I'm a mock LLM. How can I help you today?";
-    } else if (Text.contains(promptLower, #text "motoko")) {
-      return "Motoko is a programming language designed for the Internet Computer. It's named after the character Major Motoko Kusanagi from 'Ghost in the Shell'. Motoko offers modern language features like type safety, pattern matching, and automatic memory management.";
-    } else if (Text.contains(promptLower, #text "internet computer") or Text.contains(promptLower, #text "icp")) {
-      return "The Internet Computer is a blockchain network that provides a platform for running smart contracts (called canisters) and decentralized applications (dapps). It was developed by DFINITY Foundation.";
-    } else if (Text.contains(promptLower, #text "dfinity")) {
-      return "DFINITY Foundation is the organization behind the Internet Computer Protocol (ICP). They're working to build technology for an open internet.";
-    } else {
-      return "I'm a simple mock LLM implementation. In a real application, your prompt would be sent to an actual LLM API, and you would receive a more sophisticated response based on your input: \"" # prompt # "\"";
+
+    // Prepare request body
+    let requestBody = "{" #
+      "\"model\": \"gpt-3.5-turbo\", " #
+      "\"messages\": " # formatMessagesForAPI(messages) # 
+      (switch (temperature) {
+        case (null) { "" };
+        case (?temp) { ", \"temperature\": " # debug_show(temp) };
+      }) #
+      (switch (max_tokens) {
+        case (null) { "" };
+        case (?tokens) { ", \"max_tokens\": " # Nat.toText(tokens) };
+      }) #
+    "}";
+
+    // Prepare HTTP request for IC management canister
+    let request = {
+      url = providerConfig.endpoint;
+      max_response_bytes = null;
+      headers = Array.append(
+        [
+          { name = "Content-Type"; value = "application/json" },
+          { name = "Authorization"; value = "Bearer " # providerConfig.api_key }
+        ],
+        switch (providerConfig.organization) {
+          case (null) { [] };
+          case (?org) { [{ name = "OpenAI-Organization"; value = org }] };
+        }
+      );
+      body = ?Text.encodeUtf8(requestBody);
+      method = #post;
+      transform = ?{
+        function = transform;
+        context = Blob.fromArray([]);
+      };
+    };
+
+    // Add cycles for the HTTP request - fixed with system capability
+    Cycles.add<system>(230_850_258_000);
+
+    // Make the API call
+    try {
+      let http_response = await IC.http_request(request);
+      
+      if (http_response.status == 200) {
+        // Parse response (simplified)
+        let responseText = switch (Text.decodeUtf8(http_response.body)) {
+          case (null) { "No response" };
+          case (?text) { text };
+        };
+
+        return #ok({
+          text = responseText;
+          model = model;
+          input_tokens = messages.size();
+          output_tokens = 10;
+          total_tokens = messages.size() + 10;
+          finish_reason = "stop";
+          function_call = null;
+        });
+      } else {
+        return #err("HTTP Error: " # Nat.toText(http_response.status));
+      }
+    } catch (e) {
+      return #err("Request failed: " # Error.message(e));
     };
   };
 
@@ -124,7 +227,7 @@ actor LLMIntegration {
   };
   
   // Send a message to the LLM and get a response
-  public func sendMessage(conversationId: Text, message: Text) : async ?LLMResponse {
+  public func sendMessage<system>(conversationId: Text, message: Text) : async ?LLMResponse {
     switch (conversations.get(conversationId)) {
       case (null) {
         Debug.print("Conversation not found: " # conversationId);
@@ -138,38 +241,55 @@ actor LLMIntegration {
           timestamp = Time.now();
         };
         
-        // Create a Buffer from the existing messages to make it mutable
-        let messagesBuffer = Buffer.Buffer<Message>(conversation.messages.size() + 2);
-        for (msg in conversation.messages.vals()) {
-          messagesBuffer.add(msg);
-        };
-        messagesBuffer.add(userMessage);
+        var messagesArray : [Message] = Array.tabulate<Message>(
+          conversation.messages.size() + 1,
+          func(i : Nat) : Message {
+            if (i < conversation.messages.size()) {
+              conversation.messages[i]
+            } else {
+              userMessage
+            }
+          }
+        );
         
-        // Format the entire conversation as a prompt
-        let prompt = formatPrompt(Buffer.toArray(messagesBuffer));
+        // Call the LLM provider function with OpenAI model as an example
+        let llmResponseResult = await callLLMProvider<system>(#OpenAI, messagesArray, null, null);
         
-        // In a real application, this would be an HTTP outcall to an LLM API
-        // For this example, we use a mock implementation
-        let llmResponseText = mockLLMResponse(prompt);
-        
-        // Add the LLM's response to the conversation
-        let assistantMessage : Message = {
-          role = "assistant";
-          content = llmResponseText;
-          timestamp = Time.now();
-        };
-        
-        messagesBuffer.add(assistantMessage);
-        
-        // Update the conversation in the store
-        let updatedConversation : Conversation = {
-          id = conversationId;
-          messages = Buffer.toArray(messagesBuffer);
-        };
-        conversations.put(conversationId, updatedConversation);
-        
-        // Parse and return the LLM response
-        return ?parseLLMResponse(llmResponseText);
+        switch (llmResponseResult) {
+          case (#ok(response)) {
+            // Add the LLM's response to the conversation
+            let assistantMessage : Message = {
+              role = "assistant";
+              content = response.text;
+              timestamp = Time.now();
+            };
+            
+            messagesArray := Array.tabulate<Message>(
+              messagesArray.size() + 1,
+              func(i : Nat) : Message {
+                if (i < messagesArray.size()) {
+                  messagesArray[i]
+                } else {
+                  assistantMessage
+                }
+              }
+            );
+            
+            // Update the conversation in the store
+            let updatedConversation : Conversation = {
+              id = conversationId;
+              messages = messagesArray;
+            };
+            conversations.put(conversationId, updatedConversation);
+            
+            // Return the LLM response
+            return ?response;
+          };
+          case (#err(errorMessage)) {
+            Debug.print("Error from LLM provider: " # errorMessage);
+            return null;
+          };
+        }
       };
     };
   };
@@ -184,11 +304,15 @@ actor LLMIntegration {
     return Iter.toArray(conversations.keys());
   };
   
-  // Alternative implementation: using a simple prompt/response pattern
-  // without maintaining conversation history
-  public func simplePrompt(prompt: Text) : async LLMResponse {
-    let response = mockLLMResponse(prompt);
-    return parseLLMResponse(response);
+  // Alternative implementation: simple prompt without maintaining conversation history
+  public func simplePrompt<system>(prompt: Text) : async Result.Result<LLMResponse, Text> {
+    let message : Message = {
+      role = "user";
+      content = prompt;
+      timestamp = Time.now();
+    };
+    
+    return await callLLMProvider<system>(#OpenAI, [message], null, null);
   };
   
   // ===== System Management =====
@@ -207,4 +331,9 @@ actor LLMIntegration {
     );
     conversationsEntries := [];
   };
+
+  // Initialize providers on deployment
+  public func initCanister() : async () {
+    await initializeProviders();
+  }; 
 }
