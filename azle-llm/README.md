@@ -26,3 +26,4 @@ The application connects to Llama3-1-8B through the ICP-LLM-Client, sending user
 ## Screenshots
 
 ![IC LLM Demo Screenshot](/ss1.png)
+
