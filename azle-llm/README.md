@@ -1,8 +1,8 @@
 # IC LLM Demo - Azle
 
-A simple yet powerful web application that leverages the Internet Computer Protocol (ICP) to interact with large language models (LLMs).
+A simple web application that leverages the Internet Computer Protocol (ICP) to interact with large language models (LLMs).
 
-![IC LLM Demo Screenshot](/ss2.png)
+![IC LLM Demo Screenshot](ss2.png)
 
 ## Libraries
 
@@ -25,5 +25,19 @@ The application connects to Llama3-1-8B through the ICP-LLM-Client, sending user
 
 ## Screenshots
 
-![IC LLM Demo Screenshot](/ss1.png)
+![IC LLM Demo Screenshot](ss1.png)
 
+## Local Deployment
+
+```bash
+dfx start --clean --background #start a new replica on the background
+
+cd DeAI/azle-llm # navigate to the azle llm dir
+
+npm install # install project deps
+
+dfx deploy #to deploy both backend and frontend canisters
+
+npm run dev #start a local dev server
+
+```
