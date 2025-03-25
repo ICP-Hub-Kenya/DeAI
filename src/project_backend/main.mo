@@ -8,6 +8,7 @@ import Debug "mo:base/Debug";
 import Array "mo:base/Array";
 import Error "mo:base/Error"; 
 import Nat "mo:base/Nat";
+
 actor NativeLLMIntegration {
   // Types
   public type Conversation = {
@@ -85,6 +86,12 @@ actor NativeLLMIntegration {
         // Format messages for LLM
         var chatMessages : [LLM.ChatMessage] = [];
         Debug.print("Formatting messages for LLM chat");
+        
+        // Add a system message at the beginning
+        chatMessages := [{
+          role = #system_;
+          content = "You are a helpful assistant.";
+        }];
         
         for (msg in messagesArray.vals()) {
           Debug.print("Processing message with role: " # msg.role);
