@@ -4,13 +4,13 @@ This repository contains examples of how to build different Decentralized AI (De
 
 ## Repository Structure
 
-- **[azle-llm-canister](azle-llm) [rust]**: 
+- **[azle-llm-canister](azle-llm) [``azle``]**: 
   - **Description**: A demo on how to build an AI Agent using the LLM Canister (In Azle).
   - **Key Features**: 
     - Leverages large language models (LLMs) for AI tasks.
     - Demonstrates on-chain AI capabilities.
 
-- **[lm-canister](llm_canister)**: 
+- **[rust-llm-canister](llm_canister) [``rust``]**: 
   - **Description**: A demo on how to build an AI Agent using the LLM Canister (In Rust).
   - **Key Features**: 
     - Leverages large language models (LLMs) for AI tasks.
