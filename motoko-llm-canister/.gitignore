@@ -1,0 +1,36 @@
+<<<<<<< HEAD
+# Various IDEs and Editors
+.vscode/
+.idea/
+**/*~
+
+# Mac OSX temporary files
+.DS_Store
+**/.DS_Store
+
+# dfx temporary files
+.dfx/
+
+# generated files
+**/declarations/
+
+# rust
+target/
+
+# frontend code
+node_modules/
+dist/
+.svelte-kit/
+
+# environment variables
+.env
+=======
+.specstory
+.cursor
+.cursor/rules
+.cursor/rules/derived-cursor-rules.mdc
+.cursor/rules/derived-cursor-rules.mdc.backup
+.cursor/rules/derived-cursor-rules.mdc.backup.1
+>>>>>>> upstream/main
+
+.mops

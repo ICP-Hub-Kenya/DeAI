@@ -1,0 +1,13 @@
+{
+  "canisters": {
+    "project_backend": {
+      "main": "src/project_backend/main.mo",
+      "type": "motoko"
+    }
+  },
+  "defaults": {
+    "build": {
+      "packtool": "mops sources"
+    }
+  }
+}
