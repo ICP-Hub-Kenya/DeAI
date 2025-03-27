@@ -16,7 +16,7 @@ This repository contains examples of how to build different Decentralized AI (De
     - Leverages large language models (LLMs) for AI tasks.
     - Demonstrates on-chain AI capabilities.
 
-- **[motoko-llm-canister](motoko-llm-canister)**: 
+- **[motoko-llm-canister](motoko-llm-canister) [``motoko``]**: 
   - **Description**: A demo on how to build an AI Agent using the LLM Canister.
   - **Key Features**: 
     - Leverages large language models (LLMs) for AI tasks.
