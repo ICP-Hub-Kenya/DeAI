@@ -392,3 +392,5 @@ Once deployed, you can test the agent with various inputs:
 5. **Documentation**: Maintain clear documentation of the agent's capabilities
 
 This example demonstrates how to create a focused, task-specific AI agent on the Internet Computer. You can use this pattern to build other specialized agents for different purposes.
+
+You can check out the official repository for the different examples on how to use the llm canister [here](https://github.com/dfinity/llm)
