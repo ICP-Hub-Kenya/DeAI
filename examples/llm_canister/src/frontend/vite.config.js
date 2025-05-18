@@ -1,8 +1,8 @@
 import { fileURLToPath, URL } from 'url';
-import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
-import environment from 'vite-plugin-environment';
-import dotenv from 'dotenv';
+import react from '../../$node_modules/@vitejs/plugin-react/dist/index.mjs';
+import { defineConfig } from '../../$node_modules/vite/dist/node/index.js';
+import environment from '../../$node_modules/vite-plugin-environment/dist/index.js';
+import dotenv from '../../$node_modules/dotenv/lib/main.js';
 
 dotenv.config({ path: '../../.env' });
 
