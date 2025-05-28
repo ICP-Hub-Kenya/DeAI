@@ -3,10 +3,10 @@
 Our central resource for building DeAI on ICP
 
 ## Content: 
-- [Introduction to LLM Canister](./content/README.md#introduction-to-llm-canister)
-- [Introduction to ICP Ninja](./content/README.md#Introduction-to-ICP-Ninja)
-- [Create a chatbot on ICP Ninja using LLM Canister](./content/README.md#Create-an-LLM-Chatbot-using-ICP-Ninja-&-LLM-Canister)
-- [(Showcase) Lookup Agent using LLM Canister](./content/README.md#(Showcase)-lookup-agent-using-llm-canister)
+- [Introduction to LLM Canister](./content/01_llm-canister.md)
+- [Introduction to ICP Ninja](./content/02_icp-ninja.md)
+- [Create a chatbot on ICP Ninja using LLM Canister](./content/03_create-chatbot.md)
+- [(Showcase) Lookup Agent using LLM Canister](./content/04_demo-lookup-agent.md)
 - [Examples on building DeAI projects on ICP](./examples/README.md)
 
 ## External Resources: 
