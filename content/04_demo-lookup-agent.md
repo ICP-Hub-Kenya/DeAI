@@ -6,6 +6,8 @@ A lookup agent is a specialized AI agent that performs a specific task - in this
 3. Process and validate user inputs
 4. Handle complex workflows with the LLM
 
+![lookup agent](./images/lookup-agent.png)
+
 ### Step-by-Step Implementation
 
 #### 1. Clone and Setup the Example
@@ -127,7 +129,5 @@ Once deployed, you can test the agent with various inputs:
 5. **Documentation**: Maintain clear documentation of the agent's capabilities
 
 This example demonstrates how to create a focused, task-specific AI agent on the Internet Computer. You can use this pattern to build other specialized agents for different purposes.
-
-![lookup agent](./images/lookup-agent.png)
 
 You can check out the official repository for the different examples on how to use the llm canister [here](https://github.com/dfinity/llm)
