@@ -1,0 +1,12 @@
+type Result = variant { Ok; Err : text };
+type Result_1 = variant { Ok : vec float32; Err : text };
+service : () -> {
+  append_bytes : (text, blob) -> ();
+  append_openai_model_bytes : (blob) -> ();
+  bytes : (text) -> (blob) query;
+  clear_bytes : (text) -> ();
+  clear_openai_model_bytes : () -> ();
+  setup_parler_tts_model : () -> (Result);
+  store_bytes : (text, blob) -> ();
+  text_to_speech : (text) -> (Result_1);
+}

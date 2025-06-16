@@ -1,0 +1,36 @@
+{
+  "canisters": {
+    "icp_huggingface_backend": {
+      "type": "custom",
+      "build": [
+        "RUSTFLAGS='--cfg getrandom_backend=\"custom\"' cargo build --target wasm32-unknown-unknown --release -p icp_huggingface_backend"
+      ],
+      "wasm": "target/wasm32-unknown-unknown/release/icp_huggingface_backend.wasm",
+      "candid": "src/icp_huggingface_backend/icp_huggingface_backend.did",
+
+      "metadata": [
+          {
+            "name": "candid:service"
+          }
+        ]
+    },
+    "icp_huggingface_frontend": {
+      "dependencies": [
+        "icp_huggingface_backend"
+      ],
+      "source": [
+        "src/icp_huggingface_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "icp_huggingface_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
