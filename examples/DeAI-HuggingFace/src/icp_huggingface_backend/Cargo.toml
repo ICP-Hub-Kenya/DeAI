@@ -1,0 +1,26 @@
+[package]
+name = "icp_huggingface_backend"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+candid = "0.10.14"
+ic-cdk = "0.18.3"
+ic-cdk-timers = "0.12" # Feel free to remove this dependency if you don't need timers 
+embedded-alloc = "0.6.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", default-features = false, features = ["alloc"] } # Ensure alloc feature for no_std
+ic-cdk-macros = "0.18.3"
+ic-stable-structures = "0.6.9"
+ic-file-uploader = "0.1.2"
+bytes = "1.10.1"
+candle-transformers = { version="0.9.1" }
+candle-core = "0.9.1"
+candle-nn = "0.9.1"
+ic-wasi-polyfill = "0.8.2"
+safetensors = "0.5.3"
